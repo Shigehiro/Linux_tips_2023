@@ -8,7 +8,7 @@
 - [6. Procedure](#6-procedure)
 - [7. Walkthrough logs](#7-walkthrough-logs)
 - [Error when creating a fresh VM by using the golden image](#error-when-creating-a-fresh-vm-by-using-the-golden-image)
-  - [Another workaround](#another-workaround)
+  - [Workaround](#workaround)
 
 # 2. Description
 
@@ -78,6 +78,9 @@ When I tried to create a fresh with the template image, I saw the VM failed to b
 Here is the root cause. 
 - https://access.redhat.com/solutions/6833751
 
+Here is info about x86-64-v2
+- https://developers.redhat.com/blog/2021/01/05/building-red-hat-enterprise-linux-9-for-the-x86-64-v2-microarchitecture-level#background_of_the_x86_64_microarchitecture_levels
+
 - KVM host
 ```text
 $ ps aux |grep qemu-system|grep -v grep
@@ -112,8 +115,11 @@ Fatal glibc error: CPU does not support x86-64-v2
 [    0.843181] ---[ end Kernel panic - not syncing: Attempted to kill init! exitcode=0x00007f00 ]---
 ```
 
-- try the [workaround](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/configuring_and_managing_virtualization/optimizing-virtual-machine-performance-in-rhel_configuring-and-managing-virtualization#optimizing-virtual-machine-cpu-performance_optimizing-virtual-machine-performance-in-rhel)
+## Workaround
 
+- if you see the same error, try the [this](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/configuring_and_managing_virtualization/optimizing-virtual-machine-performance-in-rhel_configuring-and-managing-virtualization#optimizing-virtual-machine-cpu-performance_optimizing-virtual-machine-performance-in-rhel)
+
+I was able to launch the VM.
 ```text
 $ virsh destroy lab03-rocky9 
 
@@ -136,7 +142,3 @@ cLast login: Fri Jan  6 01:41:01 on ttyS0
 Rocky Linux release 9.1 (Blue Onyx)
 [root@localhost ~]# 
 ```
-
-## Another workaround
-
-- https://access.redhat.com/solutions/539233
