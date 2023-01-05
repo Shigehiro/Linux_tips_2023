@@ -23,7 +23,7 @@ nftables-0.9.3-26.el8.x86_64
 $ sudo dnf install -y nftables
 ```
 
-- As described [here](!https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_networking/getting-started-with-nftables_configuring-and-managing-networking#when-to-use-firewalld-nftables-or-iptables_assembly_migrating-from-iptables-to-nftables), enabling both firewalld.service and nftables.service are not recommended. so enable the one of them(nftables.service), disable the other(firewalld.service).
+- As described [here](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_networking/getting-started-with-nftables_configuring-and-managing-networking#when-to-use-firewalld-nftables-or-iptables_assembly_migrating-from-iptables-to-nftables), enabling both firewalld.service and nftables.service are not recommended. so enable the one of them(nftables.service), disable the other(firewalld.service).
 
 - stop/disable firewalld, enable/start nftables
 ```text
