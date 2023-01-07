@@ -38,7 +38,7 @@ selinux --permissive
 
 
 # System bootloader configuration
-bootloader --location=mbr --timeout=1 --append="console=tty1 console=ttyS0,115200n8"
+bootloader --location=mbr --timeout=1 --append="console=tty1 net.ifnames=0 console=ttyS0,115200n8"
 
 # Network information
 network  --bootproto=dhcp --device=link --activate --onboot=on
