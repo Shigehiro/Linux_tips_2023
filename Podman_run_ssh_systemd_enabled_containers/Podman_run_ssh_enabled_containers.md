@@ -28,14 +28,22 @@ Here is the notes what I did.
 
 | Container OS   | cgroup | systemd | sshd | rsyslog | Added Capabiities       | Note               |
 | -------------- | ------ | ------- | ---- | ------- | ----------------------- | ------------------ |
-| CentOS Stream9 | v2     | OK      | OK   | OK      | AUDIT_WRITE             | install old rsyslog |
-| CentOS7        | v2     | NG      | NG   | NG      | AUDIT_WRITE, privileged | See [1]            |
-| CentOS7        | v1     | OK      | OK   | OK      | AUDIT_WRITE             | See [1]            |
+| CentOS Stream9 | v2     | OK      | OK   | OK      | AUDIT_WRITE,See [1]            | install old rsyslog |
+| CentOS7        | v2     | NG      | NG   | NG      | AUDIT_WRITE, privileged | See [2]            |
+| CentOS7        | v1     | OK      | OK   | OK      | AUDIT_WRITE             | See [2]            |
 | Alma8          | v2     | OK      | OK   | OK      | AUDIT_WRITE             | None               |
 | Alma9          | v2     | OK      | OK   | NG      | AUDIT_WRITE             | None               |
 | Alma9          | v2     | OK      | OK   | OK      | privileged              | None               |
 
-[1] https://github.com/containers/podman/issues/5153#issuecomment-584649533
+- [1] https://bugzilla.redhat.com/show_bug.cgi?id=1923728#c2
+- [2] https://github.com/containers/podman/issues/5153#issuecomment-584649533
+- Why rsyslog inside the CentOS9 container worked, but Alama9's did not?
+  - This is caused by compile options of rsyslog provided by RHEL9 repo. 
+  - Before `rsyslog-8.2102.0-106.el9` would work, but the later versions would not, because the compile options have changed after `rsyslog-8.2102.0-106.el9`, which prevents the rsyslog from running inside the container.
+  - As for CentOS Stream 9 repo, I could find the old rsyslog `rsyslog-8.2102.0-106.el9` via CentOS9 repo, so I intentionally installed the old rsyslog via `dnf install` when building the CentOS Stream9 container. I, however, could not find the older rsyslog on Alma9 and Rocky9 repo, that's the reason why the rsyslog inside the Alma9 container did not work. If you would like to konw more about this, please see the below.
+    - https://unix.stackexchange.com/questions/747224/unable-to-run-rsyslogd-as-non-root-user-on-centos-stream-9
+    - https://github.com/rsyslog/rsyslog/blob/master/tools/rsyslogd.c#L2203
+    - https://github.com/ansible/awx/issues/13394
 
 ## Tested environment
 ---
