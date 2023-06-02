@@ -6,10 +6,10 @@
   - [Tested environment](#tested-environment)
   - [Install podman](#install-podman)
   - [Build and run containers](#build-and-run-containers)
-    - [AlmaLinux8 container (enable systemd, rsyslog, sshd)](#almalinux8-container-enable-systemd-rsyslog-sshd)
-    - [AlmaLinux9 container (enable systemd, rsyslog, sshd)](#almalinux9-container-enable-systemd-rsyslog-sshd)
-    - [CentOS7 container (enable systemd, rsyslog, sshd)](#centos7-container-enable-systemd-rsyslog-sshd)
-    - [CentOS Stream9 container (enable systemd, rsyslog, sshd)](#centos-stream9-container-enable-systemd-rsyslog-sshd)
+    - [AlmaLinux8 container (enable systemd, rsyslog, sshd), cgroup v2](#almalinux8-container-enable-systemd-rsyslog-sshd-cgroup-v2)
+    - [AlmaLinux9 container (enable systemd, rsyslog, sshd), cgroup v2](#almalinux9-container-enable-systemd-rsyslog-sshd-cgroup-v2)
+    - [CentOS7 container (enable systemd, rsyslog, sshd), cgroup v2](#centos7-container-enable-systemd-rsyslog-sshd-cgroup-v2)
+    - [CentOS Stream9 container (enable systemd, rsyslog, sshd), cgroup v2](#centos-stream9-container-enable-systemd-rsyslog-sshd-cgroup-v2)
     - [CentOS7 container (enable systemd, rsyslog, sshd), cgroup v1](#centos7-container-enable-systemd-rsyslog-sshd-cgroup-v1)
 
 ## Description
@@ -78,7 +78,7 @@ Install podman.
 ## Build and run containers
 ---
 
-### AlmaLinux8 container (enable systemd, rsyslog, sshd)
+### AlmaLinux8 container (enable systemd, rsyslog, sshd), cgroup v2
 ---
 
 [Build alma8 container](./Alma8-systemd-ssh/Dockerfile)
@@ -107,7 +107,7 @@ Last login: Thu Jun  1 17:17:40 2023 from 10.88.0.1
 [root@a54b5253c10e ~]# 
 ```
 
-### AlmaLinux9 container (enable systemd, rsyslog, sshd)
+### AlmaLinux9 container (enable systemd, rsyslog, sshd), cgroup v2
 ---
 
 [Build alma9 container](./Alma9-systemd-ssh/Dockerfile)
@@ -128,7 +128,7 @@ If you need rsyslog, add `privileged`. systemd, sshd and rsyslog would work.
 # podman container run -it -d --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v $(mktemp -d):/run alma9-systemd-ssh:latest
 ```
 
-### CentOS7 container (enable systemd, rsyslog, sshd)
+### CentOS7 container (enable systemd, rsyslog, sshd), cgroup v2
 ---
 
 systemd provided by CentOS7 is too old. 
@@ -144,7 +144,7 @@ systemd(sshd, rsyslog) did not run on CentOS Stream9 with podman `cgroup v2`
 # podman container run -it -d --privileged --cap-add AUDIT_WRITE -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v $(mktemp -d):/run cent7-systemd-ssh:latest
 ```
 
-### CentOS Stream9 container (enable systemd, rsyslog, sshd)
+### CentOS Stream9 container (enable systemd, rsyslog, sshd), cgroup v2
 ---
 
 [Build CentOS Stream9 container](./CentOS-Stream9-systemd-ssh/Dockerfile)
