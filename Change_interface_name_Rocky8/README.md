@@ -2,7 +2,7 @@
 
 ## Description
 
-Here is how to change interface name on Rocky Linyx8.
+Here is how to change interface name on Rocky Linux8.
 
 ## Walkthrough logs
 
