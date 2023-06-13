@@ -24,7 +24,7 @@ controller(CentOS) ---- managed node(CentOS)
 ```
 
 - OS : CentOS Stream9
-- install docekr engine on the managed node
+- install docker engine on the managed node
 - install ansible on the controller node
 
 ## Walkthrough logs
