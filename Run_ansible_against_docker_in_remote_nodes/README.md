@@ -47,7 +47,7 @@ ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
 ```
 # docker ps
 CONTAINER ID   IMAGE                    COMMAND        CREATED        STATUS             PORTS     NAMES
-844b9bc63607   compose_works_alam8-01   "/sbin/init"   24 hours ago   Up About an hour   22/tcp    alama8-01
+844b9bc63607   compose_works_alam8-01   "/sbin/init"   24 hours ago   Up About an hour   22/tcp    alma8-01
 19bc303cdc18   compose_works_cnet9-01   "/sbin/init"   24 hours ago   Up About an hour   22/tcp    cent9-01
 ```
 
@@ -64,7 +64,7 @@ community.docker              3.4.6
 ```text
 [containers]
 cent9-01 ansible_host=cent9-01
-alama8-01 ansible_hosst=alma8-01
+alma8-01 ansible_hosst=alma8-01
 
 [containers:vars]
 ansible_connection=docker
@@ -84,7 +84,7 @@ cent9-01 | SUCCESS => {
     "changed": false,
     "ping": "pong"
 }
-alama8-01 | SUCCESS => {
+alma8-01 | SUCCESS => {
     "ansible_facts": {
         "discovered_interpreter_python": "/usr/libexec/platform-python"
     },
@@ -115,10 +115,10 @@ PLAY [containers] **************************************************************
 TASK [debug] ***********************************************************************************************************************************ok: [cent9-01] => {
     "msg": "hello container!"
 }
-ok: [alama8-01] => {
+ok: [alma8-01] => {
     "msg": "hello container!"
 }
 
-PLAY RECAP *************************************************************************************************************************************alama8-01                  : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+PLAY RECAP *************************************************************************************************************************************alma8-01                  : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 cent9-01                   : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ```
