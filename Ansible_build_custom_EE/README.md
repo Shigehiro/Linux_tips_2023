@@ -76,7 +76,7 @@ e03b2d9e2811   compose_works_cnet9-01   "/sbin/init"   16 hours ago   Up About a
 ```
 
 - Make sure you open a TCP port for docker daemon socket.\
-See [my post](!https://github.com/Shigehiro/Linux_tips_2023/blob/main/Run_ansible_against_docker_in_remote_nodes/README.md)
+See [my post](https://github.com/Shigehiro/Linux_tips_2023/blob/main/Run_ansible_against_docker_in_remote_nodes/README.md)
 
 
 ```text
