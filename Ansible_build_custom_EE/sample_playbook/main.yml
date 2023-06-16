@@ -1,0 +1,7 @@
+---
+- hosts: containers
+  gather_facts: false
+  tasks:
+  - name: debug
+    ansible.builtin.debug:
+      msg: "hello container!"
