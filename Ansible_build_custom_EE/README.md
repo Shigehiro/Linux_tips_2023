@@ -56,12 +56,13 @@ localhost/ee_docker_plugin            20230616            4de4eacfe624  About an
 ### Run plybook with ansible-navigator
 ---
 
-There are two nodes are up and running as below.\
-I will run the playbook againt the docker containers which are running on the remote node.\
+There are two nodes up and running as below.\
+I will run the playbook againt the docker containers which are running on the remote node from the ansible-navigator node.\
 [Here is the sample playbook](./sample_playbook)
 
 ```text
 ansible-navigator        Docker containers*2
+ansible-builder
 -----------------  ---- ------------------
   CentOS Stream9         CentOS Stream9
    (podman)               (dockerd)
@@ -76,7 +77,7 @@ e03b2d9e2811   compose_works_cnet9-01   "/sbin/init"   16 hours ago   Up About a
 ```
 
 - Make sure you open a TCP port for docker daemon socket.\
-See [my post](https://github.com/Shigehiro/Linux_tips_2023/blob/main/Run_ansible_against_docker_in_remote_nodes/README.md)
+To open a TCP port for docker daemon socket, see [my post](https://github.com/Shigehiro/Linux_tips_2023/blob/main/Run_ansible_against_docker_in_remote_nodes/README.md)
 
 
 ```text
@@ -97,4 +98,4 @@ alma8-01                   : ok=1    changed=0    unreachable=0    failed=0    s
 cent9-01                   : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ```
 
-You can use this EE image with AWX.
+You can use this EE image with AWX as well.
