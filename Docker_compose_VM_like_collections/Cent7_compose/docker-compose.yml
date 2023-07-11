@@ -1,0 +1,55 @@
+version: '3'
+services:
+  a-c01:
+    container_name: a-c01
+    hostname: a-c01
+    build:
+      context: ./Docker_build/Cent7_container
+      dockerfile: Dockerfile
+    tty: true
+    cap_add:
+      - AUDIT_CONTROL  
+      - AUDIT_READ
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro 
+    tmpfs:
+      - /run
+    networks:
+      a-cent7_net:
+        ipv4_address: 172.20.5.10
+    extra_hosts:
+      - "a-c02:172.20.5.11"
+    ports:
+      - "0.0.0.0:8220:80"
+  a-c02:
+    container_name: a-c02
+    hostname: a-c02
+    privileged: true
+    build:
+      context: ./Docker_build/Cent7_container
+      dockerfile: Dockerfile
+    tty: true
+    cap_add:
+      - AUDIT_CONTROL  
+      - AUDIT_READ
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro 
+    tmpfs:
+      - /run
+    ulimits:
+      nofile:
+        soft: 5120
+        hard: 5120
+    networks:
+      a-cent7_net:
+        ipv4_address: 172.20.5.11
+    extra_hosts:
+      - "a-c01:172.20.5.10"
+networks:
+  a-cent7_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.20.5.0/24"
+
