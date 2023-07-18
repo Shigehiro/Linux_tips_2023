@@ -21,7 +21,7 @@ COPY ${ssh_pub} /tmp
 COPY ${ssh_private} /tmp
 
 WORKDIR /root
-RUN dnf install -y passwd rsyslog less man bash-completion openssh-server openssh-clients && \
+RUN dnf install -y cronie passwd rsyslog less man bash-completion openssh-server openssh-clients && \
 rm -rf .ssh && mkdir .ssh && cat /tmp/${ssh_pub} > .ssh/authorized_keys && \
 mv /tmp/${ssh_pub} .ssh/id_rsa.pub && mv /tmp/${ssh_private} .ssh/id_rsa && echo ${root_password} | passwd --stdin root && \
 chmod 0400 .ssh/authorized_keys && chmod 0600 .ssh/id_rsa && chmod 0644 .ssh/id_rsa.pub
