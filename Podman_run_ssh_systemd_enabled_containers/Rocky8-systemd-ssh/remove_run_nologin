@@ -1,0 +1,3 @@
+# https://access.redhat.com/solutions/6408321
+* * * * * root rm -f /run/nologin
+
