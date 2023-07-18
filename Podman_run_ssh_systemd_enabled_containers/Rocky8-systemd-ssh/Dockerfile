@@ -28,7 +28,7 @@ chmod 0400 .ssh/authorized_keys && chmod 0600 .ssh/id_rsa && chmod 0644 .ssh/id_
 COPY ${ssh_config} /etc/ssh/ssh_config
 
 # disable DNS lookup
-sed s/.*UseDNS.*/"UseDNS no"/ -i /etc/ssh/sshd_config
+RUN sed s/.*UseDNS.*/"UseDNS no"/ -i /etc/ssh/sshd_config
 
 # https://access.redhat.com/solutions/6408321
 COPY remove_run_nologin /etc/cron.d
