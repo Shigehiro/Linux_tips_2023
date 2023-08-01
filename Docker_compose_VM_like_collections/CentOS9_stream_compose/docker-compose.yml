@@ -1,0 +1,55 @@
+version: '3'
+services:
+  d-c01:
+    container_name: d-c01
+    hostname: d-c01
+    build:
+      context: ./Docker_build/
+      dockerfile: Dockerfile
+    tty: true
+    cap_add:
+      - AUDIT_CONTROL  
+      - AUDIT_READ
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro 
+    tmpfs:
+      - /run
+    networks:
+      d-cent9_net:
+        ipv4_address: 172.20.7.10
+    extra_hosts:
+      - "d-c02:172.20.7.11"
+    ports:
+      - "0.0.0.0:8225:80"
+  d-c02:
+    container_name: d-c02
+    hostname: d-c02
+    privileged: true
+    build:
+      context: ./Docker_build/
+      dockerfile: Dockerfile
+    tty: true
+    cap_add:
+      - AUDIT_CONTROL  
+      - AUDIT_READ
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro 
+    tmpfs:
+      - /run
+    ulimits:
+      nofile:
+        soft: 5120
+        hard: 5120
+    networks:
+      d-cent9_net:
+        ipv4_address: 172.20.7.11
+    extra_hosts:
+      - "d-c01:172.20.7.10"
+networks:
+  d-cent9_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.20.7.0/24"
+
