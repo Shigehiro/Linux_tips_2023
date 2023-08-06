@@ -17,6 +17,12 @@ WORKDIR /app
 CMD ["python3"]
 ```
 
+Build the image.
+```text
+$ docker image build --rm -t local/nomcc .
+```
+
+Run the script.
 ```text
 $ docker container run --rm -v $(pwd):/app local/nomcc:latest ./nomcc_script.py
 ```
