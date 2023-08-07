@@ -1,4 +1,4 @@
-# Build Docker iamge for nomcc
+# Build Docker image for nomcc
 
 Here is a small tip on how to build a Docker image for [nomcc](https://github.com/akamai/nomcc).
 
