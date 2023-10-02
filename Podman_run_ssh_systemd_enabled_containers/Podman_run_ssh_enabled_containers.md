@@ -2,7 +2,7 @@
 
 - [How to run systemd, sshd, rsyslog enabled containers on CentOS Stream 9(podman)](#how-to-run-systemd-sshd-rsyslog-enabled-containers-on-centos-stream-9podman)
   - [Description](#description)
-  - [Testing results (as of 2023.6.2)](#testing-results-as-of-202362)
+  - [Testing results (as of 2023.10.2)](#testing-results-as-of-2023102)
   - [Tested environment](#tested-environment)
   - [Install podman](#install-podman)
   - [Build and run containers](#build-and-run-containers)
@@ -23,27 +23,27 @@ Here is the notes what I did.
 - enable sshd
 - enable rsyslog
 
-## Testing results (as of 2023.6.2)
+## Testing results (as of 2023.10.2)
 ---
 
-| Container OS   | cgroup | systemd | sshd | rsyslog | Added Capabiities       | Note               |
+| Container image   | cgroup<br>(Host OS) | systemd<br>(container) | sshd<br>(container) | rsyslog<br>(container) | Added Capabiities       | Note               |
 | -------------- | ------ | ------- | ---- | ------- | ----------------------- | ------------------ |
-| CentOS Stream9 | v2     | OK      | OK   | OK      | AUDIT_WRITE,See [1]            | install old rsyslog |
+| CentOS Stream9 | v2     | OK      | OK   | OK      | AUDIT_WRITE            | install old rsyslog |
 | CentOS7        | v2     | NG      | NG   | NG      | AUDIT_WRITE, privileged | See [2]            |
 | CentOS7        | v1     | OK      | OK   | OK      | AUDIT_WRITE             | See [2]            |
-| Alma8          | v2     | OK      | OK   | OK      | AUDIT_WRITE             | None               |
-| Alma9          | v2     | OK      | OK   | NG      | AUDIT_WRITE             | None               |
-| Alma9          | v2     | OK      | OK   | OK      | privileged              | None               |
+| Alma Linux8 | v2     | OK      | OK   | OK      | AUDIT_WRITE             | None               |
+| Alma Linux9 | v2     | OK      | OK   | OK  | AUDIT_WRITE             | None               |
+<br>
 
-- [1] https://bugzilla.redhat.com/show_bug.cgi?id=1923728#c2
+- ~~[1] https://bugzilla.redhat.com/show_bug.cgi?id=1923728#c2~~
 - [2] https://github.com/containers/podman/issues/5153#issuecomment-584649533
-- Why rsyslog inside the CentOS9 container worked, but Alama9's did not?
-  - This is caused by compile options of rsyslog provided by RHEL9 repo. 
-  - Before `rsyslog-8.2102.0-106.el9` would work, but the later versions would not, because the compile options have changed after `rsyslog-8.2102.0-106.el9`, which prevents the rsyslog from running inside the container.
-  - As for CentOS Stream 9 repo, I could find the old rsyslog `rsyslog-8.2102.0-106.el9` via CentOS9 repo, so I intentionally installed the old rsyslog via `dnf install` when building the CentOS Stream9 container. I, however, could not find the older rsyslog on Alma9 and Rocky9 repo, that's the reason why the rsyslog inside the Alma9 container did not work. If you would like to konw more about this, please see the below.
-    - https://unix.stackexchange.com/questions/747224/unable-to-run-rsyslogd-as-non-root-user-on-centos-stream-9
-    - https://github.com/rsyslog/rsyslog/blob/master/tools/rsyslogd.c#L2203
-    - https://github.com/ansible/awx/issues/13394
+- ~~Why rsyslog inside the CentOS9 container worked, but Alama9's did not?~~
+  - ~~This is caused by compile options of rsyslog provided by RHEL9 repo.~~
+  - ~~Before `rsyslog-8.2102.0-106.el9` would work, but the later versions would not, because the compile options have changed after `rsyslog-8.2102.0-106.el9`, which prevents the rsyslog from running inside the container.~~
+  - ~~As for CentOS Stream 9 repo, I could find the old rsyslog `rsyslog-8.2102.0-106.el9` via CentOS9 repo, so I intentionally installed the old rsyslog via `dnf install` when building the CentOS Stream9 container. I, however, could not find the older rsyslog on Alma9 and Rocky9 repo, that's the reason why the rsyslog inside the Alma9 container did not work. If you would like to konw more about this, please see the below.~~
+    - ~~https://unix.stackexchange.com/questions/747224/unable-to-run-rsyslogd-as-non-root-user-on-centos-stream-9~~
+    - ~~https://github.com/rsyslog/rsyslog/blob/master/tools/rsyslogd.c#L2203~~
+    - ~~https://github.com/ansible/awx/issues/13394~~
 
 ## Tested environment
 ---
@@ -114,19 +114,14 @@ Last login: Thu Jun  1 17:17:40 2023 from 10.88.0.1
 ```text
 # podman build --tag alma9-systemd-ssh .
 ```
-
-If you do not need rsyslog, run this. systemd and sshd would work.
 ```text
 # podman container run -it -d --cap-add AUDIT_WRITE -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v $(mktemp -d):/run alma9-systemd-ssh:latest 
 ```
 
-If you need rsyslog, add `privileged`. systemd, sshd and rsyslog would work.
-- https://unix.stackexchange.com/questions/747224/unable-to-run-rsyslogd-as-non-root-user-on-centos-stream-9
-- https://github.com/rsyslog/rsyslog/blob/master/tools/rsyslogd.c#L2203
-- https://github.com/ansible/awx/issues/13394
-```text
-# podman container run -it -d --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v $(mktemp -d):/run alma9-systemd-ssh:latest
-```
+~~If you need rsyslog, add `privileged`. systemd, sshd and rsyslog would work.~~
+- ~~https://unix.stackexchange.com/questions/747224/unable-to-run-rsyslogd-as-non-root-user-on-centos-stream-9~~
+- ~~https://github.com/rsyslog/rsyslog/blob/master/tools/rsyslogd.c#L2203~~
+- ~~https://github.com/ansible/awx/issues/13394~~
 
 ### CentOS7 container (enable systemd, rsyslog, sshd), cgroup v2
 ---
@@ -143,6 +138,9 @@ systemd(sshd, rsyslog) did not run on CentOS Stream9 with podman `cgroup v2`
 ```text
 # podman container run -it -d --privileged --cap-add AUDIT_WRITE -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v $(mktemp -d):/run cent7-systemd-ssh:latest
 ```
+
+You will notice systemd,rsyslog,sshd are not running.
+If you would like to run CentOS7 image with systemd,rsyslog,sshd, [use cgroup v1](#centos7-container-enable-systemd-rsyslog-sshd-cgroup-v1)
 
 ### CentOS Stream9 container (enable systemd, rsyslog, sshd), cgroup v2
 ---
