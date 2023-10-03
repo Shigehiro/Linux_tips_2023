@@ -28,7 +28,7 @@ Here is the notes what I did.
 
 | Container image   | cgroup<br>(Host OS) | systemd<br>(container) | sshd<br>(container) | rsyslog<br>(container) | Added Capabiities       | Note               |
 | -------------- | ------ | ------- | ---- | ------- | ----------------------- | ------------------ |
-| CentOS Stream9 | v2     | OK      | OK   | OK      | AUDIT_WRITE            | install old rsyslog |
+| CentOS Stream9 | v2     | OK      | OK   | OK      | AUDIT_WRITE            | ~~install old rsyslog~~ |
 | CentOS7        | v2     | NG      | NG   | NG      | AUDIT_WRITE, privileged | See [2]            |
 | CentOS7        | v1     | OK      | OK   | OK      | AUDIT_WRITE             | See [2]            |
 | Alma Linux8 | v2     | OK      | OK   | OK      | AUDIT_WRITE             | None               |
