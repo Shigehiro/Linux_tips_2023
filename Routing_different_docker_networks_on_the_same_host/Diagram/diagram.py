@@ -3,7 +3,7 @@
 from diagrams import Cluster, Diagram
 from diagrams.onprem.container import Docker
 
-with Diagram("", filename='docker_diagram.png', show=False):
+with Diagram("", filename='docker_diagram', show=False):
 
     with Cluster("Docker Host"):
         container01 = Docker("container01\nnet01")
@@ -11,6 +11,7 @@ with Diagram("", filename='docker_diagram.png', show=False):
         vyos = Docker("vyos\nnet01     net02")
 
     container01 >> vyos << container02
+    container01 << vyos >> container02
 
 
 

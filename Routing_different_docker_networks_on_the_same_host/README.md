@@ -12,7 +12,7 @@ Docker networks are not designed to route between each other, but you can connec
 - To route packets between container01 and container02
   - Add static routes on both container01 and container02.
 
-![network diagram](./Diagram/docker_diagram.png.png)
+![network diagram](./Diagram/docker_diagram.png)
 
 ## How to build a VyOS container image
 
