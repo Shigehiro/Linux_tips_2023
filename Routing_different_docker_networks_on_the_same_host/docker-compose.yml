@@ -1,0 +1,63 @@
+version: '3'
+services:
+  a-c01:
+    container_name: a-c01
+    hostname: a-c01
+    cap_add:
+      - NET_ADMIN
+    build:
+      context: ./Docker_build/Alma9
+      dockerfile: Dockerfile
+    tty: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro 
+    tmpfs:
+      - /run
+    networks:
+      a-vyos01:
+        ipv4_address: 10.0.0.10
+  a-c02:
+    container_name: a-c02
+    hostname: a-c02
+    cap_add:
+      - NET_ADMIN
+    build:
+      context: ./Docker_build/Alma9
+      dockerfile: Dockerfile
+    tty: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro 
+    tmpfs:
+      - /run
+    networks:
+      a-vyos02:
+        ipv4_address: 192.168.100.10
+  a-vyos:
+    container_name: a-vyos
+    hostname: a-vyos
+    privileged: true
+    image: vyos-1.5-rolling-202310030022:latest
+    tty: true
+    volumes:
+      - /lib/modules:/lib/modules
+    tmpfs:
+      - /run
+    command: /sbin/init
+    networks:
+      a-vyos01:
+        ipv4_address: 10.0.0.200
+      a-vyos02:
+        ipv4_address: 192.168.100.200
+networks:
+  a-vyos01:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: "10.0.0.0/24"
+  a-vyos02:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: "192.168.100.0/24"

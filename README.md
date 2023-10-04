@@ -11,4 +11,5 @@
 - [Docker compose file of VM like environment](./Docker_compose_VM_like_collections/)
   - Run VM like(enable ssh, rsyslog) containers with docker-compose
 - [Build Docker image for nomcc](./Build_Docker_image_nomcc/README.md)
+- [Routing among different docker networks on the same host machine](./Routing_different_docker_networks_on_the_same_host/README.md)
 
